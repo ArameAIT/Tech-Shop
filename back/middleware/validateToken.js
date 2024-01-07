@@ -12,6 +12,7 @@ export default function validateToken(req, res, next) {
         res.status(401).json(response)
         return
     }
+    req.id = verifying
     if(verifying == 5){
         req.admin = true
     }
