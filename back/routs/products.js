@@ -13,4 +13,5 @@ productRouter.put("/updateProduct/:id",validateToken,validateProduct,updateProdu
 
 productRouter.delete("/deleteProduct/:id",validateToken,deleteProductController)
 
+
 export default productRouter
