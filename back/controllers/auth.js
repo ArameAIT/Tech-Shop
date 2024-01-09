@@ -35,7 +35,6 @@ export async function loginController(req, res) {
     try {
 
         const user = await isUserExists(req.body)
-        console.log(user);
         if (!user) {
             response.error = {
                 message: "email or password is wrong"

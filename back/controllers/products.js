@@ -1,4 +1,4 @@
-import { addProduct, deleteProduct, getProducts, updateProduct } from "../db/slices/products.js";
+import { addProduct, deleteProduct, forRating, getProducts, updateProduct } from "../db/slices/products.js";
 import responseTemplate from "../lib.js/responseTemplate.js";
 // import multer from "multer"
 
@@ -110,6 +110,29 @@ export async function deleteProductController(req, res) {
         }
         res.status(200).json(response)
     } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function ratingController(req,res){
+    const response = responseTemplate()
+    const {product_id} = req.params
+    const {id} = req
+    const {rating} = req.body
+    if(!Number.isInteger(+product_id) || !Number.isInteger(+rating)){
+        response.error = {
+            message : "Wrong queries"
+        }
+        res.status(400).json(response)
+        return
+    }
+    try{
+        await forRating(product_id,rating,id)
+        response.data = {
+            message : "Rating added successfully"
+        }
+        res.status(200).json(response)
+    }catch(err){
         console.log(err);
     }
 }

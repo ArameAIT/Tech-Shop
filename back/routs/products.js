@@ -1,5 +1,5 @@
 import express from "express"
-import { addProductController, deleteProductController, getProductsController, updateProductController } from "../controllers/products.js"
+import { addProductController, deleteProductController, getProductsController, ratingController, updateProductController } from "../controllers/products.js"
 import validateToken from "../middleware/validateToken.js"
 import validateProduct from "../middleware/validateProduct.js"
 
@@ -12,6 +12,8 @@ productRouter.post("/addProduct",validateToken,validateProduct,addProductControl
 productRouter.put("/updateProduct/:id",validateToken,validateProduct,updateProductController)
 
 productRouter.delete("/deleteProduct/:id",validateToken,deleteProductController)
+
+productRouter.post("/rating/:product_id",validateToken,ratingController)
 
 
 export default productRouter
