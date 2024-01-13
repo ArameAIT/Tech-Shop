@@ -10,7 +10,7 @@ export async function getProductsController(req, res) {
     // const photoBuffer = req.file;
 
     // console.log(photoBuffer);
-    const { page, pageSize, sortBy, sortOrder, filterName, filterMinPrice, filterMaxPrice, filterCategory } = req.query
+    const { page = 5, pageSize = 1, sortBy, sortOrder, filterName, filterMinPrice, filterMaxPrice, filterCategory } = req.query
 
     if (!Number.isInteger(+page) || !Number.isInteger(+pageSize) || +page < 1 || +pageSize < 1) {
         response.error = {
@@ -18,6 +18,7 @@ export async function getProductsController(req, res) {
         }
         res.status(400).json(response)
         return
+
     }
     const sortByArray = ["value", "rating"]
     const sortOrderArray = ["asc", "desc"]
@@ -48,7 +49,6 @@ export async function getProductsController(req, res) {
     }
 
     const products = await getProducts(page, pageSize, sortBy, sortOrder, filterName, filterMinPrice, filterMaxPrice, filterCategory)
-    // const token = 
     response.data = {
         products
     }
@@ -102,7 +102,7 @@ export async function updateProductController(req, res) {
 
 export async function deleteProductController(req, res) {
     const response = responseTemplate()
-    const {id} = req.params
+    const { id } = req.params
     try {
         await deleteProduct(id)
         response.data = {
@@ -114,25 +114,25 @@ export async function deleteProductController(req, res) {
     }
 }
 
-export async function ratingController(req,res){
+export async function ratingController(req, res) {
     const response = responseTemplate()
-    const {product_id} = req.params
-    const {id} = req
-    const {rating} = req.body
-    if(!Number.isInteger(+product_id) || !Number.isInteger(+rating)){
+    const { product_id } = req.params
+    const { id } = req
+    const { rating } = req.body
+    if (!Number.isInteger(+product_id) || !Number.isInteger(+rating)) {
         response.error = {
-            message : "Wrong queries"
+            message: "Wrong queries"
         }
         res.status(400).json(response)
         return
     }
-    try{
-        await forRating(product_id,rating,id)
+    try {
+        await forRating(product_id, rating, id)
         response.data = {
-            message : "Rating added successfully"
+            message: "Rating added successfully"
         }
         res.status(200).json(response)
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 }

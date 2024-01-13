@@ -54,6 +54,7 @@ export async function getProducts(page, pageSize, sortBy, sortOrder, filterName,
     params.push((+page - 1) * +pageSize, +pageSize);
 
     const products = await pool.query(query, params);
+    console.log(products);
     return {
         products: products[0],
         totalCount: totalCount

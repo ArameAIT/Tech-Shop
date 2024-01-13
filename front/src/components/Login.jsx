@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeIsLogin } from '../store/slice/login'
 import { changeToken } from '../store/slice/token'
-import { Link, Navigate   } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { changeIsAdmin } from '../store/slice/isAdmin'
+import { changeUserName } from '../store/slice/UserName'
 
 function Login() {
 
@@ -41,6 +43,10 @@ function Login() {
                     })
                 )
                 setIsLogined(true)
+                const name = res.data.message.split(" ").slice(1).join(" ")
+                dispatch(changeUserName({
+                    userName : name
+                }))
             }
             if (res.error !== null) {
                 if (res.error.message.email == undefined) {
@@ -50,6 +56,11 @@ function Login() {
                     setErrorContext(res.error.message.email)
                 }
             }
+            if (res.isAdmin) {
+                dispatch(changeIsAdmin({
+                    isAdmin: res.isAdmin
+                }))
+            }
         })
     }, [forRequest])
 
@@ -57,13 +68,13 @@ function Login() {
         setforRequest(prev => !prev)
     }
     if (isLogined) {
-        return <Navigate  to="/" />;
+        return <Navigate to="/" />;
     }
 
     return (
 
 
-        <div className='flex flex-col gap-12'>
+        <div className='flex flex-col gap-7 justify-center items-center'>
             <div className='text-[60px] text-blue-950'>
                 Login
             </div>

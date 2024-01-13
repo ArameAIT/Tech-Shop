@@ -4,23 +4,34 @@ import Login from './components/Login'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getLogin } from './store/slice/login'
+import { getIsAdmin } from './store/slice/isAdmin'
+import AdminProducts from './components/admin/adminProducts'
 
 function App() {
-  // const [login, setLogin] = useState(false)
   const isLogin = useSelector(getLogin)
-  console.log(isLogin);
+  const isAdmin = useSelector(getIsAdmin)
+
   return (
 
     <div>
       {
         isLogin ? (
           <div>
-            <p>Logined</p>
+            {
+              isAdmin ?  (
+                <div>
+                <AdminProducts/>
+                </div>
+              ) : (
+                <div>
+                  Not Admin
+                </div>
+              )
+            }
           </div>
         ) : (
           <div >
             <Link to={"/login"}>
-
               <Login />
             </Link>
           </div>
