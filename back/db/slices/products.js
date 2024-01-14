@@ -54,17 +54,20 @@ export async function getProducts(page, pageSize, sortBy, sortOrder, filterName,
     params.push((+page - 1) * +pageSize, +pageSize);
 
     const products = await pool.query(query, params);
-    console.log(products);
     return {
         products: products[0],
         totalCount: totalCount
     }
 }
 
-export async function addProduct(name, description, value, count, category) {
-    await pool.query(`INSERT INTO products (name,description,value,count,category) VALUES (?,?,?,?,?)`
+export async function addProduct(name, description, value, count, category, buffer) {
+    const addedProduct = await pool.query(`INSERT INTO products (name,description,value,count,category) VALUES (?,?,?,?,?)`
         , [name, description, value, count, category])
-}
+    console.log(addedProduct[0].insertId);
+    // const productId = addProduct.insertId;
+    // console.log(productId);
+    await pool.query(`INSERT INTO photos (product_id,photo) VALUES (?,?)`,[addedProduct[0].insertId,buffer])
+}  
 
 export async function updateProduct(id, name, description, value, count, category) {
     await pool.query(`
@@ -91,7 +94,7 @@ export async function forRating(product_id, rating, user_id) {
     }
     const rates = await pool.query(`SELECT * FROM ratings WHERE product_id = ?`, [product_id])
     const newRating = await pool.query("SELECT AVG(rating) AS average_rating FROM rates WHERE product_id = ?", [product_id])
-    const {average_rating} = newRating[0][0]
+    const { average_rating } = newRating[0][0]
     const finalRating = (average_rating + "").split(".")[0]
     if (rates[0].length == 0) {
         await pool.query(`INSERT INTO ratings (product_id,rating ) VALUES (?,?)`, [product_id, finalRating])
@@ -99,7 +102,7 @@ export async function forRating(product_id, rating, user_id) {
         await pool.query(`UPDATE ratings
          SET rating = ? 
          WHERE product_id = ?`
-            , [finalRating,product_id])
+            , [finalRating, product_id])
     }
 
 

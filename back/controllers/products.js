@@ -1,15 +1,8 @@
 import { addProduct, deleteProduct, forRating, getProducts, updateProduct } from "../db/slices/products.js";
 import responseTemplate from "../lib.js/responseTemplate.js";
-// import multer from "multer"
 
 export async function getProductsController(req, res) {
     const response = responseTemplate()
-    // const storage = multer.memoryStorage();
-    // const upload = multer({ storage: storage });
-    // upload.single('photo')
-    // const photoBuffer = req.file;
-
-    // console.log(photoBuffer);
     const { page = 5, pageSize = 1, sortBy, sortOrder, filterName, filterMinPrice, filterMaxPrice, filterCategory } = req.query
 
     if (!Number.isInteger(+page) || !Number.isInteger(+pageSize) || +page < 1 || +pageSize < 1) {
@@ -58,6 +51,8 @@ export async function getProductsController(req, res) {
 export async function addProductController(req, res) {
     const response = responseTemplate()
     const { name, description, value, count, category } = req.body
+    const base64String = req.body.photo;
+    const buffer = Buffer.from(base64String, 'base64');
     const categoryArray = ["phone", "computer", "laptop", "tablet", "kitchen", "other"]
     if (category && !categoryArray.includes(category)) {
         response.data = {
@@ -67,7 +62,7 @@ export async function addProductController(req, res) {
         return
     }
     try {
-        await addProduct(name, description, value, count, category)
+        await addProduct(name, description, value, count, category,buffer)
         response.data = {
             message: "Product added successfully"
         }

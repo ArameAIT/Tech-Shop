@@ -7,6 +7,7 @@ const productRouter = express.Router()
 
 productRouter.get("/getProducts",validateToken,getProductsController)
 
+// productRouter.post("/addProduct",validateToken,upload.single('photo'),addProductController)
 productRouter.post("/addProduct",validateToken,validateProduct,addProductController)
 
 productRouter.put("/updateProduct/:id",validateToken,validateProduct,updateProductController)
