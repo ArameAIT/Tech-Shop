@@ -4,6 +4,7 @@ import tokenSlice from "./slice/token"
 import isAdminSlice from "./slice/isAdmin"
 import UserNameSlice from './slice/UserName'
 import ProductsSlice from "./slice/products"
+import forEditSlice from './slice/forEdit'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     tokenSlice,
     isAdminSlice,
     UserNameSlice,
-    ProductsSlice
+    ProductsSlice,
+    forEditSlice
   },
 })

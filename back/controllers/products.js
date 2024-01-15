@@ -30,6 +30,14 @@ export async function getProductsController(req, res) {
         res.status(400).json(response)
         return
     }
+    const categoryArray = ["phone", "computer", "laptop", "tablet", "kitchen", "other"]
+    if (filterCategory && !categoryArray.includes(filterCategory)) {
+        response.data = {
+            message: "Wrong query or queries"
+        }
+        res.status(400).json(response)
+        return
+    }
     if (
         (filterMinPrice !== undefined && !Number.isFinite(+filterMinPrice)) ||
         (filterMaxPrice !== undefined && !Number.isFinite(+filterMaxPrice))
@@ -75,6 +83,8 @@ export async function addProductController(req, res) {
 export async function updateProductController(req, res) {
     const response = responseTemplate()
     const { name, description, value, count, category } = req.body
+    const base64String = req.body.photo;
+    const buffer = Buffer.from(base64String, 'base64');
     const categoryArray = ["phone", "computer", "laptop", "tablet", "kitchen", "other"]
     if (category && !categoryArray.includes(category)) {
         response.data = {
@@ -85,7 +95,7 @@ export async function updateProductController(req, res) {
     }
     const { id } = req.params
     try {
-        await updateProduct(id, name, description, value, count, category)
+        await updateProduct(id, name, description, value, count, category,buffer)
         response.data = {
             message: "Product updated successfully"
         }

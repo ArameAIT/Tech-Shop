@@ -22,11 +22,8 @@ function Header() {
           <img src="/public/logo.jpg" className='w-[100px] rounded-full' />
         </div>
         <div className='ml-2'>
-          <p className='text-[30px]'>Tech Shop</p>
+          <p className='text-[30px] border rounded-full text-blue-500 bg-white p-2'>Tech Shop</p>
         </div>
-      </div>
-      <div>
-        Search
       </div>
       <div>
         Cart
@@ -41,7 +38,7 @@ function Header() {
         {
           isLogined && (
             <div>
-              <button onClick={handleButton} className='text-black p-1'>Log out</button>
+              <button onClick={handleButton} className='text-blue-500 p-1'>Log out</button>
             </div>
           )
         }
