@@ -182,7 +182,7 @@ function AdminProducts() {
         </div>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center gap-5'>
+      <div className='flex flex-wrap justify-center items-center gap-5 mt-[20px]'>
 
         {products.map((prod) => {
           return <AdminProduct key={prod.id} info={prod} />;
