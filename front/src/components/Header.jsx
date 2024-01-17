@@ -17,11 +17,11 @@ function Header() {
   }
 
   return (
-    <div className='border border-blue-900 bg-blue-500 p-3 w-full text-white flex justify-between items-center'>
+    <div className='fixed top-0 left-0 right-0 border-blue-900 bg-blue-500 p-3 w-full text-white flex justify-between items-center'>
       <div className='text-[30px] flex items-center justify-center'>
         <div>
           <Link to={"/"}>
-          <img src="/public/logo.jpg" className='w-[100px] rounded-full' />
+            <img src="/public/logo.jpg" className='w-[100px] rounded-full' />
           </Link>
         </div>
         <div className='ml-2'>

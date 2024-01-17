@@ -5,6 +5,7 @@ import isAdminSlice from "./slice/isAdmin"
 import UserNameSlice from './slice/UserName'
 import ProductsSlice from "./slice/products"
 import forEditSlice from './slice/forEdit'
+import CartSlice from "./slice/cart"
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     isAdminSlice,
     UserNameSlice,
     ProductsSlice,
-    forEditSlice
+    forEditSlice,
+    CartSlice
   },
 })

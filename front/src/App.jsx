@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { getLogin } from './store/slice/login'
 import { getIsAdmin } from './store/slice/isAdmin'
 import AdminProducts from './components/admin/adminProducts'
+import UserProducts from './components/user/UserProducts'
 
 function App() {
   const isLogin = useSelector(getLogin)
@@ -24,7 +25,7 @@ function App() {
                 </div>
               ) : (
                 <div>
-                  Not Admin
+                  <UserProducts/>
                 </div>
               )
             }

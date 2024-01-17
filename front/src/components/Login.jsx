@@ -45,7 +45,7 @@ function Login() {
                 setIsLogined(true)
                 const name = res.data.message.split(" ").slice(1).join(" ")
                 dispatch(changeUserName({
-                    userName : name
+                    userName: name
                 }))
             }
             if (res.error !== null) {
@@ -57,8 +57,13 @@ function Login() {
                 }
             }
             if (res.isAdmin) {
+                console.log(res.isAdmin);
                 dispatch(changeIsAdmin({
                     isAdmin: res.isAdmin
+                }))
+            } else {
+                dispatch(changeIsAdmin({
+                    isAdmin: false
                 }))
             }
         })

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getToken } from '../../store/slice/token';
-import { changeProducts, getProducts } from '../../store/slice/products';
-import AdminProduct from './AdminProduct';
-import { getEdit } from '../../store/slice/forEdit';
+  import React, { useEffect, useState } from 'react';
+  import { useDispatch, useSelector } from 'react-redux';
+  import { getToken } from '../../store/slice/token';
+  import { changeProducts, getProducts } from '../../store/slice/products';
+  import AdminProduct from './AdminProduct';
+  import { getEdit } from '../../store/slice/forEdit';
 
 function AdminProducts() {
   const token = useSelector(getToken);

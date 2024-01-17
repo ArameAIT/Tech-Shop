@@ -36,7 +36,8 @@ export async function addCommentController(req, res) {
     try {
         await addComment(product_id, comment, id)
         response.data = {
-            message: "Comment added successfully"
+            message: "Comment added successfully",
+            user_id : id
         }
         res.status(200).json(response)
     } catch (err) {
