@@ -30,7 +30,6 @@ export async function registerController(req, res) {
 }
 
 export async function loginController(req, res) {
-    // if()
     const response = responseTemplate()
     try {
 

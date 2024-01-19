@@ -19,13 +19,13 @@ function App() {
         isLogin ? (
           <div>
             {
-              isAdmin ?  (
+              isAdmin ? (
                 <div>
-                <AdminProducts/>
+                  <AdminProducts />
                 </div>
               ) : (
                 <div>
-                  <UserProducts/>
+                  <UserProducts />
                 </div>
               )
             }

@@ -1,7 +1,7 @@
-export default function responseTemplate(){
+export default function responseTemplate() {
     return {
-        data : null,
-        error : null,
-        isAdmin : false
+        data: null,
+        error: null,
+        isAdmin: false
     }
 }

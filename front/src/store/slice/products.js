@@ -6,7 +6,7 @@ const ProductsSlice = createSlice({
         value: JSON.parse(localStorage.getItem("AProduct")) || [],
     },
     reducers: {
-        changeProducts(state, {payload}) {
+        changeProducts(state, { payload }) {
             state.value = payload.products;
             localStorage.setItem("AProducts", JSON.stringify(state.value));
         },

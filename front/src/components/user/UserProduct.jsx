@@ -8,11 +8,6 @@ function UserProduct(info) {
 
     const product = info.info
     const [imageData, setImageData] = useState([]);
-    const [name, setName] = useState(product.name);
-    const [description, setDescription] = useState(product.description);
-    const [value, setValue] = useState(product.value);
-    const [count, setCount] = useState(product.count);
-    const [category, setCategory] = useState(product.category);
     const [forComments, setForComments] = useState(false)
     const [forAddComments, setForAddComments] = useState(false)
     const [comments, setComments] = useState([])
@@ -176,12 +171,12 @@ function UserProduct(info) {
                 )}
             </div>
             <div>
-                <p>{product.name}</p>
-                <p>{product.description}</p>
+                <p className=' text-gray-500'>{product.name}</p>
+                <p className='text-[15px]'>{product.description}</p>
                 <p>{product.value}֏  դր․</p>
                 <p>մնացել է {product.count} հատ</p>
             </div>
-            <button onClick={() => setForComments(prev => !prev)}>Comments</button>
+            <button className='bg-blue-500 text-white mt-[10px]' onClick={() => setForComments(prev => !prev)}>Comments</button>
             {forComments && (
                 <div className="mt-4">
                     <h3 className="text-xl font-semibold mb-2">Comments</h3>

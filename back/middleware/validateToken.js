@@ -13,7 +13,7 @@ export default function validateToken(req, res, next) {
         return
     }
     req.id = verifying
-    if(verifying == 5){
+    if (verifying == 5) {
         req.admin = true
     }
     next()

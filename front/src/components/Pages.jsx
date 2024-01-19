@@ -17,7 +17,7 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <App />,
-                
+
             },
             {
                 path: 'login',
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
                 element: <Register />,
             },
             {
-                path : 'cart',
-                element : <Cart/>
+                path: 'cart',
+                element: <Cart />
             }
         ],
     },

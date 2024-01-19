@@ -18,14 +18,16 @@ function UserProducts() {
     const forEdit = useSelector(getEdit)
 
     const [filterCategory, setfilterCategory] = useState("phone")
-    const [sortType, setSortType] = useState("asc")
+    const [sortType, setSortType] = useState("desc")
     const [sortBy, setSortBy] = useState("value")
     const [search, setSearch] = useState("")
     const [maxValue, setMaxValue] = useState(900000)
     const [minValue, setMinValue] = useState(0)
+    const [page, setPage] = useState(1)
+
 
     useEffect(() => {
-        fetch(`http://localhost:4000/product/getProducts?page=1&pageSize=3&sortBy=${sortBy}&sortOrder=${sortType}&filterCategory=${filterCategory}&filterName=${search}&filterMaxPrice=${maxValue}&filterMinPrice=${minValue}`, {
+        fetch(`http://localhost:4000/product/getProducts?page=${page}&pageSize=10&sortBy=${sortBy}&sortOrder=${sortType}&filterCategory=${filterCategory}&filterName=${search}&filterMaxPrice=${maxValue}&filterMinPrice=${minValue}`, {
             method: 'GET',
             headers: headers,
         })
@@ -40,8 +42,19 @@ function UserProducts() {
                 }
                 console.log('get');
             });
-    }, [filterCategory, search, minValue, maxValue, sortBy, sortType,forEdit]);
+    }, [filterCategory, search, minValue, maxValue, sortBy, sortType, forEdit, page]);
     const products = useSelector(getProducts)
+
+    function increasePage() {
+        setPage(page => page + 1)
+    }
+    function decreasePage() {
+        if (page == 1) {
+            return
+        } else {
+            setPage(page => page - 1)
+        }
+    }
     return (
         <div className='flex flex-col justify-center items-center mt-[30px]'>
             <div className='flex justify-center items-center space-x-4'>
@@ -119,12 +132,20 @@ function UserProducts() {
                         id="for-type"
                         className="px-2 py-1 border rounded focus:outline-none focus:border-blue-500 transition duration-300"
                     >
-                        <option value="asc">From lower to upper</option>
                         <option value="desc">From upper to lower</option>
+                        <option value="asc">From lower to upper</option>
                     </select>
                 </div>
             </div>
+            <div className='mt-[20px] flex justify-center items-center gap-5'>
+                <button onClick={decreasePage} className='bg-blue-500 text-white'>-</button>
+                <p>
 
+                    {page}
+                </p>
+                <button onClick={increasePage} className='bg-blue-500 text-white'>+</button>
+
+            </div>
             <div className='flex flex-wrap justify-center items-center gap-5 mt-[20px]'>
 
                 {products.map((prod) => {

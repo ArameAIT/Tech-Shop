@@ -4,10 +4,10 @@ import validateToken from "../middleware/validateToken.js"
 
 const commentsRouter = express.Router()
 
-commentsRouter.get("/getComments/:product_id",validateToken,getCommmentsController)
+commentsRouter.get("/getComments/:product_id", validateToken, getCommmentsController)
 
-commentsRouter.post("/addComment",validateToken,addCommentController)
+commentsRouter.post("/addComment", validateToken, addCommentController)
 
-commentsRouter.delete("/deleteComment/:comment_id",validateToken,deleteCommentController)
+commentsRouter.delete("/deleteComment/:comment_id", validateToken, deleteCommentController)
 
 export default commentsRouter

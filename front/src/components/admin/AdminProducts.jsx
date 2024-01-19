@@ -1,9 +1,9 @@
-  import React, { useEffect, useState } from 'react';
-  import { useDispatch, useSelector } from 'react-redux';
-  import { getToken } from '../../store/slice/token';
-  import { changeProducts, getProducts } from '../../store/slice/products';
-  import AdminProduct from './AdminProduct';
-  import { getEdit } from '../../store/slice/forEdit';
+import React, { useEffect, useState, useSyncExternalStore, useTransition } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getToken } from '../../store/slice/token';
+import { changeProducts, getProducts } from '../../store/slice/products';
+import AdminProduct from './AdminProduct';
+import { getEdit } from '../../store/slice/forEdit';
 
 function AdminProducts() {
   const token = useSelector(getToken);
@@ -23,11 +23,12 @@ function AdminProducts() {
   const [category, setCategory] = useState('');
   const [add, setAdd] = useState(false);
   const [filterCategory, setfilterCategory] = useState("phone")
-  const [sortType, setSortType] = useState("asc")
+  const [sortType, setSortType] = useState("desc")
   const [sortBy, setSortBy] = useState("value")
   const [search, setSearch] = useState("")
-  const [maxValue, setMaxValue] = useState(900000)
+  const [maxValue, setMaxValue] = useState(2000000)
   const [minValue, setMinValue] = useState(0)
+  const [page, setPage] = useState(1)
 
   const forEdit = useSelector(getEdit)
 
@@ -56,7 +57,6 @@ function AdminProducts() {
           category: category,
           photo: base64String,
         };
-
         fetch('http://localhost:4000/product/addProduct', {
           method: 'POST',
           headers: headers,
@@ -79,7 +79,7 @@ function AdminProducts() {
   }, [add, selectedFile]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/product/getProducts?page=1&pageSize=3&sortBy=${sortBy}&sortOrder=${sortType}&filterCategory=${filterCategory}&filterName=${search}&filterMaxPrice=${maxValue}&filterMinPrice=${minValue}`, {
+    fetch(`http://localhost:4000/product/getProducts?page=${page}&pageSize=10&sortBy=${sortBy}&sortOrder=${sortType}&filterCategory=${filterCategory}&filterName=${search}&filterMaxPrice=${maxValue}&filterMinPrice=${minValue}`, {
       method: 'GET',
       headers: headers,
     })
@@ -92,13 +92,20 @@ function AdminProducts() {
             })
           );
         }
-        console.log('get');
       });
-  }, [add, filterCategory, search, minValue, maxValue, sortBy, sortType,forEdit]);
+  }, [add, filterCategory, search, minValue, maxValue, sortBy, sortType, forEdit, page]);
   const products = useSelector(getProducts)
 
-
-
+  function increasePage() {
+    setPage(page => page + 1)
+  }
+  function decreasePage() {
+    if (page == 1) {
+      return
+    } else {
+      setPage(page => page - 1)
+    }
+  }
   return (
     <div className='flex flex-col justify-center items-center mt-[30px]'>
       <div className='flex justify-center items-center space-x-4'>
@@ -109,6 +116,7 @@ function AdminProducts() {
             name="for-category"
             id="for-category"
             className="px-2 py-1 border rounded focus:outline-none focus:border-blue-500 transition duration-300"
+            selected
           >
             <option value='phone'>Phone</option>
             <option value='computer'>Computer</option>
@@ -176,19 +184,27 @@ function AdminProducts() {
             id="for-type"
             className="px-2 py-1 border rounded focus:outline-none focus:border-blue-500 transition duration-300"
           >
-            <option value="asc">From lower to upper</option>
             <option value="desc">From upper to lower</option>
+            <option value="asc">From lower to upper</option>
           </select>
         </div>
       </div>
+      <div className='mt-[20px] flex justify-center items-center gap-5'>
+        <button onClick={decreasePage} className='bg-blue-500 text-white'>-</button>
+        <p>
 
+          {page}
+        </p>
+        <button onClick={increasePage} className='bg-blue-500 text-white'>+</button>
+
+      </div>
       <div className='flex flex-wrap justify-center items-center gap-5 mt-[20px]'>
 
         {products.map((prod) => {
           return <AdminProduct key={prod.id} info={prod} />;
         })}
         <div className='border rounded-2xl p-5'>
-          <div className='w-[200px] h-[350px] rounded-2xl flex justify-center items-center'  onClick={openPopup}>
+          <div className='w-[200px] h-[350px] rounded-2xl flex justify-center items-center' onClick={openPopup}>
             <img src='/public/add-icon.png' className='w-[100px]' />
           </div>
         </div>
@@ -212,6 +228,7 @@ function AdminProducts() {
 
               <label htmlFor='category'>Category:</label>
               <select value={category} onChange={(e) => setCategory(e.target.value)} className='mb-3' id='category'>
+                <option value="none">Select</option>
                 <option value='phone'>Phone</option>
                 <option value='computer'>Computer</option>
                 <option value='laptop'>Laptop</option>

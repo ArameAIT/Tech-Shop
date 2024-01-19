@@ -4,8 +4,8 @@ import validate from "../middleware/validate.js"
 
 const authRouter = express.Router()
 
-authRouter.post("/register", validate("register"),registerController)
+authRouter.post("/register", validate("register"), registerController)
 
-authRouter.post("/login", validate("login"),loginController)
+authRouter.post("/login", validate("login"), loginController)
 
 export default authRouter

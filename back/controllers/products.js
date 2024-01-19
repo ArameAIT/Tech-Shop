@@ -70,7 +70,7 @@ export async function addProductController(req, res) {
         return
     }
     try {
-        await addProduct(name, description, value, count, category,buffer)
+        await addProduct(name, description, value, count, category, buffer)
         response.data = {
             message: "Product added successfully"
         }
@@ -95,7 +95,7 @@ export async function updateProductController(req, res) {
     }
     const { id } = req.params
     try {
-        await updateProduct(id, name, description, value, count, category,buffer)
+        await updateProduct(id, name, description, value, count, category, buffer)
         response.data = {
             message: "Product updated successfully"
         }

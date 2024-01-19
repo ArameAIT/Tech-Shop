@@ -8,6 +8,6 @@ export function hashingPassword(password) {
     return hashedPassword
 }
 
-export function isPasswordTrue(hashedPassword,password){
+export function isPasswordTrue(hashedPassword, password) {
     return hashedPassword == password
 }

@@ -105,7 +105,6 @@ function AdminProduct(info) {
     useEffect(() => {
 
         if (forAddComments) {
-            console.log(1);
             const requestBody = {
                 comment: newComment,
                 product_id: product.id
@@ -178,11 +177,9 @@ function AdminProduct(info) {
     function increaseCount() {
         setCartCount((prevCount) => prevCount + 1);
 
-        // Find the product in the cart
         const cartProductIndex = cartProducts.findIndex((prod) => prod.id === product.id);
 
         if (cartProductIndex === -1) {
-            // If the product is not in the cart, add it
             const cartProduct = {
                 ...product,
                 cartCount: 1,
@@ -191,7 +188,6 @@ function AdminProduct(info) {
                 cart: [...cartProducts, cartProduct],
             }));
         } else {
-            // If the product is already in the cart, update its count
             const updatedCart = cartProducts.map((prod, index) =>
                 index === cartProductIndex
                     ? { ...prod, cartCount: prod.cartCount + 1 }
@@ -232,7 +228,7 @@ function AdminProduct(info) {
         dataUrl = `data:image/jpeg;base64,${base64String}`;
     }
     return (
-        <div className='group font-semibold cursor-pointer flex flex-col justify-center items-center border rounded-2xl p-5 w-[300px] hover:shadow-lg transition duration-300 ease-in-out'>
+        <div className='group  font-semibold cursor-pointer flex flex-col justify-center items-center border rounded-2xl p-5 w-[300px] hover:shadow-lg transition duration-300 ease-in-out'>
             <div className='w-[200px]  rounded-2xl '>
                 {imageData.length > 0 ? (
                     <img src={dataUrl} className='rounded-2xl  h-[200px]' alt='Product' />
@@ -241,12 +237,12 @@ function AdminProduct(info) {
                 )}
             </div>
             <div>
-                <p>{product.name}</p>
-                <p>{product.description}</p>
+                <p className=' text-gray-500'>{product.name}</p>
+                <p className='text-[15px]'>{product.description}</p>
                 <p>{product.value}֏  դր․</p>
                 <p>մնացել է {product.count} հատ</p>
             </div>
-            <button onClick={() => setForComments(prev => !prev)}>Comments</button>
+            <button className='bg-blue-500 text-white mt-[10px]' onClick={() => setForComments(prev => !prev)}>Comments</button>
             {forComments && (
                 <div className="mt-4">
                     <h3 className="text-xl font-semibold mb-2">Comments</h3>

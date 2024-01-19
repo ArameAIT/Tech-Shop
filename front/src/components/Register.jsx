@@ -97,14 +97,14 @@ function Register() {
             Register
           </button>
           <p className='mt-[20px]'>
-                    if you already have an account,
-                    <span>
+            if you already have an account,
+            <span>
 
-                        <Link className='text-blue-950' to={"/login"}>
-                            login
-                        </Link>
-                    </span>
-                </p>
+              <Link className='text-blue-950' to={"/login"}>
+                login
+              </Link>
+            </span>
+          </p>
         </div>
       </div></div>
   )

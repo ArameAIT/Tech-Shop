@@ -37,7 +37,7 @@ export async function addCommentController(req, res) {
         await addComment(product_id, comment, id)
         response.data = {
             message: "Comment added successfully",
-            user_id : id
+            user_id: id
         }
         res.status(200).json(response)
     } catch (err) {
@@ -48,7 +48,7 @@ export async function addCommentController(req, res) {
 export async function deleteCommentController(req, res) {
     const response = responseTemplate()
     const { comment_id } = req.params
-    const {id} = req
+    const { id } = req
     if (!Number.isInteger(+comment_id)) {
         response.error = {
             message: "Wrong queries"
@@ -57,8 +57,8 @@ export async function deleteCommentController(req, res) {
         return
     }
     try {
-        const delComment = await deleteComment(comment_id,id)
-        if(delComment == false){
+        const delComment = await deleteComment(comment_id, id)
+        if (delComment == false) {
             response.error = {
                 message: "bad request"
             }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { getCart } from '../store/slice/cart'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeCart, getCart } from '../store/slice/cart'
 import CartProduct from './CartProduct'
 import { getToken } from '../store/slice/token'
 
@@ -12,6 +12,7 @@ function Cart() {
   });
 
   const [forBuying, setForBuying] = useState(false)
+  const dispatch = useDispatch()
 
   const cartProducts = useSelector(getCart)
 
@@ -26,7 +27,9 @@ function Cart() {
 
   useEffect(() => {
     if (forBuying) {
-
+      dispatch(changeCart({
+        cart: []
+      }))
       fetch("http://localhost:4000/basket/updateBasket", {
         method: "PUT",
         headers: headers,

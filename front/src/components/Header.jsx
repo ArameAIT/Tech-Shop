@@ -17,7 +17,7 @@ function Header() {
   }
 
   return (
-    <div className='fixed top-0 left-0 right-0 border-blue-900 bg-blue-500 p-3 w-full text-white flex justify-between items-center'>
+    <div className='border-blue-900 bg-blue-500 p-3 w-full text-white flex justify-between items-center'>
       <div className='text-[30px] flex items-center justify-center'>
         <div>
           <Link to={"/"}>
