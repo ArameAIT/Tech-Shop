@@ -1,4 +1,4 @@
-import { addProduct, deleteProduct, forRating, getProducts, updateProduct } from "../db/slices/products.js";
+import { addProduct, deleteProduct, forRating, getProducts, updatePhoto, updateProduct, uploadPhoto } from "../db/slices/products.js";
 import responseTemplate from "../lib.js/responseTemplate.js";
 
 export async function getProductsController(req, res) {
@@ -59,8 +59,8 @@ export async function getProductsController(req, res) {
 export async function addProductController(req, res) {
     const response = responseTemplate()
     const { name, description, value, count, category } = req.body
-    const base64String = req.body.photo;
-    const buffer = Buffer.from(base64String, 'base64');
+    // const base64String = req.body.photo;
+    // const buffer = Buffer.from(base64String, 'base64');
     const categoryArray = ["phone", "computer", "laptop", "tablet", "kitchen", "other"]
     if (category && !categoryArray.includes(category)) {
         response.data = {
@@ -70,9 +70,10 @@ export async function addProductController(req, res) {
         return
     }
     try {
-        await addProduct(name, description, value, count, category, buffer)
+        const productId = await addProduct(name, description, value, count, category)
         response.data = {
-            message: "Product added successfully"
+            message: "Product added successfully",
+            id: productId
         }
         res.status(200).json(response)
     } catch (err) {
@@ -80,11 +81,32 @@ export async function addProductController(req, res) {
     }
 }
 
+export async function uploadPhotoController(req, res) {
+    const fileBuffer = req.file.buffer;
+    const { product_id } = req.params;
+    const { requestType } = req.query; 
+
+    if (requestType === "update") {
+        try {
+            updatePhoto(fileBuffer, product_id);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            await uploadPhoto(fileBuffer, product_id);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    res.status(200).json({ message: 'File uploaded successfully!' });
+}
+
+
 export async function updateProductController(req, res) {
     const response = responseTemplate()
     const { name, description, value, count, category } = req.body
-    const base64String = req.body.photo;
-    const buffer = Buffer.from(base64String, 'base64');
     const categoryArray = ["phone", "computer", "laptop", "tablet", "kitchen", "other"]
     if (category && !categoryArray.includes(category)) {
         response.data = {
@@ -95,7 +117,7 @@ export async function updateProductController(req, res) {
     }
     const { id } = req.params
     try {
-        await updateProduct(id, name, description, value, count, category, buffer)
+        await updateProduct(id, name, description, value, count, category)
         response.data = {
             message: "Product updated successfully"
         }

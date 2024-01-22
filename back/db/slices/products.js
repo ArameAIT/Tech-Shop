@@ -60,22 +60,26 @@ export async function getProducts(page, pageSize, sortBy, sortOrder, filterName,
     }
 }
 
-export async function addProduct(name, description, value, count, category, buffer) {
+export async function addProduct(name, description, value, count, category) {
     const addedProduct = await pool.query(`INSERT INTO products (name,description,value,count,category) VALUES (?,?,?,?,?)`
         , [name, description, value, count, category])
     console.log(addedProduct[0].insertId);
+    return addedProduct[0].insertId
 
-    await pool.query(`INSERT INTO photos (product_id,photo) VALUES (?,?)`, [addedProduct[0].insertId, buffer])
 }
 
-export async function updateProduct(id, name, description, value, count, category, buffer) {
+export async function uploadPhoto(file,product_id){
+    await pool.query(`INSERT INTO photos (product_id,photo) VALUES (?,?)`,[product_id,file])
+}
+export async function updatePhoto(file,product_id){
+    await pool.query(`UPDATE photos SET photo = ? WHERE product_id = ?`,[file,product_id])
+}
+export async function updateProduct(id, name, description, value, count, category) {
     const updatedProduct = await pool.query(`
     UPDATE products
     SET name = ?,description = ?,value = ?,count = ?,category = ?
     WHERE id = ?`
         , [name, description, value, count, category, id])
-
-    await pool.query("UPDATE photos SET photo = ? WHERE product_id = ?", [buffer, updatedProduct[0].insertId])
 }
 
 
